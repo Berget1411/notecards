@@ -54,10 +54,5 @@
 		"turbo": "^2.6.3",
 		"typescript": "catalog:"
 	},
-	"lint-staged": {
-		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-			"biome check --write ."
-		]
-	},
 	"packageManager": "bun@1.2.19"
 }

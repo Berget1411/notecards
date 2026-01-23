@@ -9,6 +9,7 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**",
+			"!**/ui",
 			"!**/.next",
 			"!**/dist",
 			"!**/.turbo",
@@ -24,7 +25,8 @@
 			"!**/.svelte-kit",
 			"!**/wrangler.jsonc",
 			"!**/.source",
-			"!**/convex/_generated"
+			"!**/convex/_generated",
+			"!**/components/ui/**/*.tsx"
 		]
 	},
 	"formatter": {
