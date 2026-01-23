@@ -1,63 +1,63 @@
 {
-  "name": "notecards",
-  "private": true,
-  "workspaces": {
-    "packages": [
-      "apps/*",
-      "packages/*"
-    ],
-    "catalog": {
-      "dotenv": "^17.2.2",
-      "zod": "^4.1.13",
-      "typescript": "^5",
-      "@cloudflare/workers-types": "^4.20251213.0",
-      "hono": "^4.8.2",
-      "@trpc/server": "^11.7.2",
-      "better-auth": "^1.4.9",
-      "ai": "^6.0.3",
-      "alchemy": "^0.82.1",
-      "wrangler": "^4.54.0",
-      "@trpc/client": "^11.7.2",
-      "@polar-sh/better-auth": "^1.6.4",
-      "drizzle-orm": "^0.45.1"
-    }
-  },
-  "type": "module",
-  "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "check-types": "turbo check-types",
-    "dev:native": "turbo -F native dev",
-    "dev:web": "turbo -F web dev",
-    "dev:server": "turbo -F server dev",
-    "db:push": "turbo -F @notecards/db db:push",
-    "db:studio": "turbo -F @notecards/db db:studio",
-    "db:generate": "turbo -F @notecards/db db:generate",
-    "db:migrate": "turbo -F @notecards/db db:migrate",
-    "deploy": "turbo -F @notecards/infra deploy",
-    "destroy": "turbo -F @notecards/infra destroy",
-    "check": "biome check --write .",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "@notecards/env": "workspace:*",
-    "dotenv": "catalog:",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.2.0",
-    "@cloudflare/workers-types": "catalog:",
-    "@notecards/config": "workspace:*",
-    "@types/node": "^22.13.14",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.1.2",
-    "turbo": "^2.6.3",
-    "typescript": "catalog:"
-  },
-  "lint-staged": {
-    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-      "biome check --write ."
-    ]
-  },
-  "packageManager": "bun@1.2.19"
+	"name": "notecards",
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"apps/*",
+			"packages/*"
+		],
+		"catalog": {
+			"dotenv": "^17.2.2",
+			"zod": "^4.1.13",
+			"typescript": "^5",
+			"@cloudflare/workers-types": "^4.20251213.0",
+			"hono": "^4.8.2",
+			"@trpc/server": "^11.7.2",
+			"better-auth": "^1.4.9",
+			"ai": "^6.0.3",
+			"wrangler": "^4.54.0",
+			"@trpc/client": "^11.7.2",
+			"@polar-sh/better-auth": "^1.6.4",
+			"drizzle-orm": "^0.45.1"
+		}
+	},
+	"type": "module",
+	"scripts": {
+		"dev": "turbo dev",
+		"build": "turbo build",
+		"check-types": "turbo check-types",
+		"dev:native": "turbo -F native dev",
+		"dev:web": "turbo -F web dev",
+		"dev:server": "turbo -F server dev",
+		"db:push": "turbo -F @notecards/db db:push",
+		"db:studio": "turbo -F @notecards/db db:studio",
+		"db:generate": "turbo -F @notecards/db db:generate",
+		"db:migrate": "turbo -F @notecards/db db:migrate",
+		"deploy:web": "turbo -F web deploy",
+		"deploy:server": "turbo -F server deploy",
+		"deploy": "turbo -F web deploy && turbo -F server deploy",
+		"check": "biome check --write .",
+		"prepare": "husky"
+	},
+	"dependencies": {
+		"@notecards/env": "workspace:*",
+		"dotenv": "catalog:",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.0",
+		"@cloudflare/workers-types": "catalog:",
+		"@notecards/config": "workspace:*",
+		"@types/node": "^22.13.14",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.1.2",
+		"turbo": "^2.6.3",
+		"typescript": "catalog:"
+	},
+	"lint-staged": {
+		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+			"biome check --write ."
+		]
+	},
+	"packageManager": "bun@1.2.19"
 }

@@ -1,7 +1,5 @@
 # notecards
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Hono, TRPC, and more.
-
 ## Features
 
 - **TypeScript** - For type safety and improved developer experience
@@ -48,13 +46,15 @@ bun run dev
 Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
 The API is running at [http://localhost:3000](http://localhost:3000).
 
-## Deployment (Cloudflare via Alchemy)
+## Deployment (Cloudflare Workers)
 
-- Dev: bun run dev
-- Deploy: bun run deploy
-- Destroy: bun run destroy
+- Web preview: `bun run --cwd apps/web preview`
+- Web deploy: `bun run deploy:web`
+- Server deploy: `bun run deploy:server`
+- Full deploy: `bun run deploy`
 
-For more details, see the guide on [Deploying to Cloudflare with Alchemy](https://www.better-t-stack.dev/docs/guides/cloudflare-alchemy).
+For local Workers development, add secrets with `wrangler secret put` and use `.dev.vars` in each app (`apps/web/.dev.vars` and `apps/server/.dev.vars`).
+
 
 ## Git Hooks and Formatting
 
