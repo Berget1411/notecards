@@ -1,16 +1,19 @@
-import { devToolsMiddleware } from "@ai-sdk/devtools";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { openai } from "@ai-sdk/openai";
 import { trpcServer } from "@hono/trpc-server";
 import { createContext } from "@notecards/api/context";
 import { appRouter } from "@notecards/api/routers/index";
 import { auth } from "@notecards/auth";
 import { env } from "@notecards/env/server";
-import { convertToModelMessages, streamText, wrapLanguageModel } from "ai";
+import { createAgentUIStreamResponse, ToolLoopAgent } from "ai";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 
 const app = new Hono();
+
+const agent = new ToolLoopAgent({
+	model: openai("gpt-4o-mini"),
+});
 
 app.use(logger());
 app.use(
@@ -38,19 +41,11 @@ app.use(
 app.post("/ai", async (c) => {
 	const body = await c.req.json();
 	const uiMessages = body.messages || [];
-	const google = createGoogleGenerativeAI({
-		apiKey: env.GOOGLE_GENERATIVE_AI_API_KEY,
-	});
-	const model = wrapLanguageModel({
-		model: google("gemini-2.5-flash"),
-		middleware: devToolsMiddleware(),
-	});
-	const result = streamText({
-		model,
-		messages: await convertToModelMessages(uiMessages),
-	});
 
-	return result.toUIMessageStreamResponse();
+	return createAgentUIStreamResponse({
+		agent,
+		uiMessages,
+	});
 });
 
 app.get("/", (c) => {

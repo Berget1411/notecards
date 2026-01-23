@@ -4,7 +4,7 @@ export interface CloudflareEnv {
 	CORS_ORIGIN: string;
 	BETTER_AUTH_SECRET: string;
 	BETTER_AUTH_URL: string;
-	GOOGLE_GENERATIVE_AI_API_KEY: string;
+	OPENAI_API_KEY: string;
 	POLAR_ACCESS_TOKEN: string;
 	POLAR_SUCCESS_URL: string;
 }
