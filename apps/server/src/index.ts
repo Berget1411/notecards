@@ -1,19 +1,14 @@
-import { openai } from "@ai-sdk/openai";
 import { trpcServer } from "@hono/trpc-server";
 import { createContext } from "@notecards/api/context";
 import { appRouter } from "@notecards/api/routers/index";
 import { auth } from "@notecards/auth";
 import { env } from "@notecards/env/server";
-import { createAgentUIStreamResponse, ToolLoopAgent } from "ai";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { aiRoutes } from "./routes/ai";
 
 const app = new Hono();
-
-const agent = new ToolLoopAgent({
-	model: openai("gpt-4o-mini"),
-});
 
 app.use(logger());
 app.use(
@@ -38,15 +33,7 @@ app.use(
 	}),
 );
 
-app.post("/ai", async (c) => {
-	const body = await c.req.json();
-	const uiMessages = body.messages || [];
-
-	return createAgentUIStreamResponse({
-		agent,
-		uiMessages,
-	});
-});
+app.route("/ai", aiRoutes);
 
 app.get("/", (c) => {
 	return c.text("OK");
