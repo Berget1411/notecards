@@ -52,6 +52,7 @@
 		"@types/node": "^22.13.14",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.2",
+		"shadcn": "^3.7.0",
 		"turbo": "^2.6.3",
 		"typescript": "catalog:"
 	},
