@@ -7,6 +7,7 @@ export interface CloudflareEnv {
 	OPENAI_API_KEY: string;
 	POLAR_ACCESS_TOKEN: string;
 	POLAR_SUCCESS_URL: string;
+	POLAR_WEBHOOK_SECRET: string;
 }
 
 declare global {

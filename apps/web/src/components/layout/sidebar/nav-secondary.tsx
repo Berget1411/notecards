@@ -1,8 +1,10 @@
 "use client";
 
-import type { Icon } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowUpRight, type LucideIcon } from "lucide-react";
 import type * as React from "react";
-
+import { useState } from "react";
+import { SubscriptionDialog } from "@/components/auth/subscription-dialog";
 import {
 	SidebarGroup,
 	SidebarGroupContent,
@@ -10,6 +12,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { authClient } from "@/lib/auth-client";
 
 export function NavSecondary({
 	items,
@@ -18,9 +21,21 @@ export function NavSecondary({
 	items: {
 		title: string;
 		url: string;
-		icon: Icon;
+		icon: LucideIcon;
 	}[];
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+	const [dialogOpen, setDialogOpen] = useState(false);
+	const { data: customerState, isLoading } = useQuery({
+		queryKey: ["customerState"],
+		queryFn: async () => {
+			const result = await authClient.customer.state();
+			return result.data;
+		},
+	});
+	const hasProSubscription =
+		(customerState?.activeSubscriptions?.length ?? 0) > 0;
+	const showUpgrade = !isLoading && !hasProSubscription;
+
 	return (
 		<SidebarGroup {...props}>
 			<SidebarGroupContent>
@@ -35,7 +50,16 @@ export function NavSecondary({
 							</SidebarMenuButton>
 						</SidebarMenuItem>
 					))}
+					{showUpgrade ? (
+						<SidebarMenuItem>
+							<SidebarMenuButton onClick={() => setDialogOpen(true)}>
+								<ArrowUpRight />
+								<span>Upgrade</span>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					) : null}
 				</SidebarMenu>
+				<SubscriptionDialog open={dialogOpen} onOpenChange={setDialogOpen} />
 			</SidebarGroupContent>
 		</SidebarGroup>
 	);

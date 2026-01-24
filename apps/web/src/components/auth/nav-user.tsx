@@ -6,6 +6,7 @@ import {
 	IconSettings,
 	IconSun,
 } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -35,6 +36,20 @@ export function NavUser() {
 	const { theme, setTheme } = useTheme();
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const [isClient, setIsClient] = useState(false);
+	const { data: customerState, isLoading } = useQuery({
+		queryKey: ["customerState"],
+		queryFn: async () => {
+			const result = await authClient.customer.state();
+			return result.data;
+		},
+	});
+	const hasProSubscription =
+		(customerState?.activeSubscriptions?.length ?? 0) > 0;
+	const subscriptionLabel = isLoading
+		? "Loading plan"
+		: hasProSubscription
+			? "Premium"
+			: "Free";
 
 	// Only show content after client-side hydration to avoid mismatch
 	useEffect(() => {
@@ -98,7 +113,7 @@ export function NavUser() {
 										{session?.user.name}
 									</span>
 									<span className="truncate text-muted-foreground text-xs">
-										{session?.user.email}
+										{subscriptionLabel}
 									</span>
 								</div>
 								<IconDotsVertical className="ml-auto size-4" />
@@ -126,7 +141,7 @@ export function NavUser() {
 											{session?.user.name}
 										</span>
 										<span className="truncate text-muted-foreground text-xs">
-											{session?.user.email}
+											{subscriptionLabel}
 										</span>
 									</div>
 								</div>

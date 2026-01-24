@@ -1,27 +1,13 @@
 "use client";
-
-import {
-	IconCamera,
-	IconChartBar,
-	IconDashboard,
-	IconDatabase,
-	IconFileAi,
-	IconFileDescription,
-	IconFileWord,
-	IconFolder,
-	IconHelp,
-	IconInnerShadowTop,
-	IconListDetails,
-	IconReport,
-	IconSettings,
-	IconUsers,
-} from "@tabler/icons-react";
+import { Calendar, File, Home, Pen, Settings, Trash } from "lucide-react";
 import Link from "next/link";
 import type * as React from "react";
+import { useState } from "react";
 import { NavUser } from "@/components/auth/nav-user";
-import { NavDocuments } from "@/components/layout/sidebar/nav-documents";
 import { NavMain } from "@/components/layout/sidebar/nav-main";
 import { NavSecondary } from "@/components/layout/sidebar/nav-secondary";
+import { NavWorkspaces } from "@/components/layout/sidebar/nav-workspaces";
+import { Kbd } from "@/components/ui/kbd";
 import {
 	Sidebar,
 	SidebarContent,
@@ -30,128 +16,63 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
+	useSidebar,
 } from "@/components/ui/sidebar";
 
 const data = {
+	user: {
+		name: "shadcn",
+		email: "m@example.com",
+		avatar: "/avatars/shadcn.jpg",
+	},
 	navMain: [
 		{
-			title: "Dashboard",
+			title: "Home",
 			url: "#",
-			icon: IconDashboard,
+			icon: Home,
 		},
 		{
-			title: "Lifecycle",
+			title: "Ask AI",
 			url: "#",
-			icon: IconListDetails,
+			icon: File,
 		},
 		{
-			title: "Analytics",
+			title: "Calendar",
 			url: "#",
-			icon: IconChartBar,
-		},
-		{
-			title: "Projects",
-			url: "#",
-			icon: IconFolder,
-		},
-		{
-			title: "Team",
-			url: "#",
-			icon: IconUsers,
-		},
-	],
-	navClouds: [
-		{
-			title: "Capture",
-			icon: IconCamera,
-			isActive: true,
-			url: "#",
-			items: [
-				{
-					title: "Active Proposals",
-					url: "#",
-				},
-				{
-					title: "Archived",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Proposal",
-			icon: IconFileDescription,
-			url: "#",
-			items: [
-				{
-					title: "Active Proposals",
-					url: "#",
-				},
-				{
-					title: "Archived",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Prompts",
-			icon: IconFileAi,
-			url: "#",
-			items: [
-				{
-					title: "Active Proposals",
-					url: "#",
-				},
-				{
-					title: "Archived",
-					url: "#",
-				},
-			],
+			icon: Calendar,
 		},
 	],
 	navSecondary: [
 		{
 			title: "Settings",
 			url: "#",
-			icon: IconSettings,
+			icon: Settings,
 		},
 		{
-			title: "Get Help",
+			title: "Trash",
 			url: "#",
-			icon: IconHelp,
-		},
-	],
-	documents: [
-		{
-			name: "Data Library",
-			url: "#",
-			icon: IconDatabase,
-		},
-		{
-			name: "Reports",
-			url: "#",
-			icon: IconReport,
-		},
-		{
-			name: "Word Assistant",
-			url: "#",
-			icon: IconFileWord,
+			icon: Trash,
 		},
 	],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+	const { toggleSidebar } = useSidebar();
+	const [openWorkspaceId, setOpenWorkspaceId] = useState<number | null>(null);
+
 	return (
-		<Sidebar collapsible="offcanvas" {...props}>
+		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem>
-						<SidebarMenuButton
-							asChild
-							className="data-[slot=sidebar-menu-button]:!p-1.5"
-						>
+						<SidebarMenuButton asChild size="lg">
 							<Link href="/">
-								<IconInnerShadowTop className="!size-5" />
-								<span className="font-semibold text-base">Acme Inc.</span>
+								<div className="flex size-8 items-center justify-center rounded-md bg-emerald-600 text-primary-foreground">
+									<Pen className="size-4 text-white" />
+								</div>
+								<span className="font-semibold text-base group-data-[collapsible=icon]:hidden">
+									Notecards
+								</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
@@ -159,7 +80,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			</SidebarHeader>
 			<SidebarContent>
 				<NavMain items={data.navMain} />
-				<NavDocuments items={data.documents} />
+				<NavWorkspaces
+					pinned
+					openWorkspaceId={openWorkspaceId}
+					setOpenWorkspaceId={setOpenWorkspaceId}
+				/>
+				<NavWorkspaces
+					openWorkspaceId={openWorkspaceId}
+					setOpenWorkspaceId={setOpenWorkspaceId}
+				/>
 				<NavSecondary items={data.navSecondary} className="mt-auto" />
 			</SidebarContent>
 			<SidebarFooter>
