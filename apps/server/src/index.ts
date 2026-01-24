@@ -7,8 +7,9 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { aiRoutes } from "./routes/ai";
+import { deckFileRoutes } from "./routes/deck-files";
 
-const app = new Hono();
+const app = new Hono<{ Bindings: Env }>();
 
 app.use(logger());
 app.use(
@@ -34,6 +35,7 @@ app.use(
 );
 
 app.route("/ai", aiRoutes);
+app.route("/decks", deckFileRoutes);
 
 app.get("/", (c) => {
 	return c.text("OK");

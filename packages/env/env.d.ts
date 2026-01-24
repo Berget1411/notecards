@@ -8,6 +8,7 @@ export interface CloudflareEnv {
 	POLAR_ACCESS_TOKEN: string;
 	POLAR_SUCCESS_URL: string;
 	POLAR_WEBHOOK_SECRET: string;
+	R2_DECK_PDFS: R2Bucket;
 }
 
 declare global {

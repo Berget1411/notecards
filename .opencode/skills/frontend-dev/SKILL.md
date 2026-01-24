@@ -16,6 +16,7 @@ metadata:
 - Preserve established design system patterns when working in existing UI surfaces
 - Favor clear, intentional layouts that hold up on mobile and desktop
 - Fetch backend data with tRPC patterns used in `apps/web/src/app/todos/page.tsx`
+- For REST endpoints, use React Query with `baseFetch` from `apps/web/src/utils/base-fetch.ts`
 - Stream AI responses with the `useChat` + `DefaultChatTransport` setup in `apps/web/src/app/ai/page.tsx`
 - Handle auth through `authClient` from `apps/web/src/lib/auth-client.ts` (Better Auth + Polar plugin)
 - Keep the app shell consistent with `apps/web/src/app/layout.tsx` and `apps/web/src/components/providers.tsx`

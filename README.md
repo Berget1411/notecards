@@ -55,6 +55,12 @@ The API is running at [http://localhost:3000](http://localhost:3000).
 
 For local Workers development, add secrets with `wrangler secret put` and use `.dev.vars` in each app (`apps/web/.dev.vars` and `apps/server/.dev.vars`).
 
+### PDF Uploads (R2)
+
+- Create an R2 bucket (defaults to `notecards-deck-pdfs`) and keep the binding name `R2_DECK_PDFS` in `apps/server/wrangler.jsonc`.
+- Run `wrangler r2 bucket create notecards-deck-pdfs` if you want the default name.
+- The upload endpoint is `POST /decks/:deckId/pdf` and stores the file URL + original name on the deck record.
+
 
 ## Git Hooks and Formatting
 

@@ -11,5 +11,11 @@
     "CORS_ORIGIN": "http://localhost:3001",
     "BETTER_AUTH_URL": "http://localhost:3000",
     "POLAR_SUCCESS_URL": "http://localhost:3001/success?checkout_id={CHECKOUT_ID}"
-  }
+  },
+  "r2_buckets": [
+    {
+      "binding": "R2_DECK_PDFS",
+      "bucket_name": "notecards-deck-pdfs"
+    }
+  ]
 }
